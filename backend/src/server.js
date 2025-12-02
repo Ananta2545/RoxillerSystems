@@ -16,7 +16,8 @@ const corsOptions = {
   origin: ['https://roxiller-systems-xe4x.vercel.app', 'http://localhost:5173'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
@@ -25,11 +26,11 @@ app.use(express.json());
 
 // Health check endpoints (no DB call to avoid cold start issues)
 app.get('/', (req, res) => {
-  res.json({ status: 'ok', message: 'Store Rating API is running' });
+  res.json({ status: 'ok', message: 'Store Rating API is running', timestamp: new Date().toISOString() });
 });
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'API is healthy' });
+  res.json({ status: 'ok', message: 'API is healthy', timestamp: new Date().toISOString() });
 });
 
 app.use('/api/auth', authRoutes);
