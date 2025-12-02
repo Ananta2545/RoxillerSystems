@@ -20,14 +20,9 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/store', storeRoutes);
 
-app.get('/api/health', async (req, res) => {
-  try {
-    await prisma.$queryRaw`SELECT 1`;
-    res.json({ status: 'ok', database: 'connected' });
-  } catch (error) {
-    res.status(500).json({ status: 'error', database: 'disconnected', error: error.message });
-  }
-});
+app.use(cors({
+  origin: ['https://roxiller-systems-xe4x.vercel.app', 'http://localhost:5173']
+}));
 
 // I am handling middle ware errors here
 app.use((err, req, res, next) => {
