@@ -5,6 +5,15 @@ A comprehensive full-stack web application that enables users to rate and review
 ## 📸 Screenshots
 
 <!-- Add your screenshots here -->
+### Normal user Dashboard: 
+<img width="1919" height="969" alt="image" src="https://github.com/user-attachments/assets/2652e7b8-2b79-419b-85df-1c1e4a0aa2d8" />
+
+### Store Dashboard: 
+<img width="1919" height="975" alt="image" src="https://github.com/user-attachments/assets/ed7575a2-0476-4dd2-91cf-f5abe8921d6d" />
+
+### Admin Dashboard: 
+<img width="1919" height="969" alt="image" src="https://github.com/user-attachments/assets/84266da3-b43c-4df6-9548-3d92aaac2f0c" />
+
 
 ---
 
@@ -305,55 +314,6 @@ After seeding the database, use these credentials to test different roles:
 - Unique constraint: [userId, storeId]
 ```
 
----
-
-## 🎯 API Endpoints
-
-### **Authentication**
-- `POST /api/auth/signup` - User registration
-- `POST /api/auth/login` - User login
-- `PUT /api/auth/update-password` - Update password
-
-### **Admin**
-- `GET /api/admin/dashboard` - Get dashboard statistics
-- `POST /api/admin/users` - Create new user
-- `POST /api/admin/stores` - Create new store
-- `GET /api/admin/users` - Get all users (with filters)
-- `GET /api/admin/users/:id` - Get user by ID
-- `GET /api/admin/stores` - Get all stores (with filters)
-
-### **User**
-- `GET /api/user/stores` - Get all stores (with filters)
-- `POST /api/user/ratings` - Submit/update rating
-
-### **Store Owner**
-- `GET /api/store/dashboard` - Get store dashboard data
-
----
-
-## 🚀 Available Scripts
-
-### **Backend**
-```bash
-npm run dev         # Start development server with nodemon
-npm start           # Start production server
-npm run db:setup    # Complete database setup (generate + push + seed)
-npm run db:generate # Generate Prisma Client
-npm run db:push     # Push schema to database
-npm run db:migrate  # Create and run migrations
-npm run db:seed     # Seed database with sample data
-```
-
-### **Frontend**
-```bash
-npm run dev      # Start Vite development server
-npm run build    # Build for production
-npm run preview  # Preview production build
-npm run lint     # Run ESLint
-```
-
----
-
 ## 🎨 Design Features
 
 - **Modern UI/UX** with Tailwind CSS
@@ -401,43 +361,6 @@ npm run lint     # Run ESLint
 ## 🤝 Contributing
 
 This project was built as part of a FullStack Intern Coding Challenge.
-
----
-
-## 📝 License
-
-This project is created for educational purposes as part of an internship coding challenge.
-
----
-
-## 🙏 Acknowledgments
-
-- Built with **Express.js**, **React**, **PostgreSQL**, and **Prisma**
-- UI styled with **Tailwind CSS**
-- Icons from **Heroicons** (SVG icons)
-
----
-
-## 📧 Contact
-
-For any queries or feedback, please reach out to the development team.
-
----
-
-**Thank you for reviewing this Store Rating System!** 🎉
-
-This application demonstrates proficiency in:
-- Full-stack development with modern technologies
-- RESTful API design and implementation
-- Database design and relationships
-- Authentication and authorization
-- Responsive web design
-- Form validation and error handling
-- State management in React
-- Role-based access control
-- Clean code architecture and best practices
-
-**Note:** Remember to run `npm run seed` in the backend to populate the database with sample data for testing!
 
 ---
 
