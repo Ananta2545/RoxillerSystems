@@ -22,6 +22,24 @@ app.use(cors({
 
 app.use(express.json());
 
+// Handle preflight OPTIONS requests
+app.options('*', cors());
+
+// Health check endpoints
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'Store Rating API is running' });
+});
+
+app.get('/api/health', async (req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({ status: 'ok', database: 'connected' });
+  } catch (error) {
+    console.error('Health check error:', error);
+    res.status(500).json({ status: 'error', database: 'disconnected' });
+  }
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/user', userRoutes);
