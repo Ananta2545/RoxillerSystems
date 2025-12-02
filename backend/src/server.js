@@ -12,17 +12,34 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+// CORS configuration - must be before routes
+app.use(cors({
+  origin: ['https://roxiller-systems-xe4x.vercel.app', 'http://localhost:5173'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
+
+// Health check endpoint
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'Store Rating API is running' });
+});
+
+app.get('/api/health', async (req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({ status: 'ok', database: 'connected' });
+  } catch (error) {
+    res.status(500).json({ status: 'error', database: 'disconnected', error: error.message });
+  }
+});
 
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/store', storeRoutes);
-
-app.use(cors({
-  origin: ['https://roxiller-systems-xe4x.vercel.app', 'http://localhost:5173']
-}));
 
 // I am handling middle ware errors here
 app.use((err, req, res, next) => {
