@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import prisma from '../config/db.js';
-import { validateUserData, validateName, validateAddress, validateEmail } from '../utils/validation.js';
+import { validateUserData } from '../utils/validation.js';
 
 export const getDashboardStats = async (req, res) => {
   try {

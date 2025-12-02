@@ -10,6 +10,7 @@ const AdminDashboard = () => {
     totalRatings: 0
   });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,11 +18,14 @@ const AdminDashboard = () => {
   }, []);
 
   const fetchStats = async () => {
+    setLoading(true);
+    setError('');
     try {
       const response = await api.get('/admin/dashboard');
       setStats(response.data);
     } catch (error) {
       console.error('Error fetching stats:', error);
+      setError('Failed to load dashboard statistics');
     } finally {
       setLoading(false);
     }
@@ -31,9 +35,28 @@ const AdminDashboard = () => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Admin Dashboard</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Admin Dashboard</h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
+        {loading ? (
+          <div className="bg-white rounded-lg shadow p-12">
+            <div className="flex flex-col items-center justify-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+              <p className="mt-4 text-gray-600">Loading dashboard...</p>
+            </div>
+          </div>
+        ) : error ? (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+            <p className="text-red-600 text-center">{error}</p>
+            <button
+              onClick={fetchStats}
+              className="mt-4 mx-auto block px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+            >
+              Retry
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0 bg-blue-500 rounded-md p-3">
@@ -104,8 +127,10 @@ const AdminDashboard = () => {
             >
               View Stores
             </button>
+            </div>
           </div>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

@@ -5,7 +5,6 @@ import PrivateRoute from './components/PrivateRoute';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import UpdatePassword from './pages/UpdatePassword';
-import FirstTimeSetup from './pages/FirstTimeSetup';
 
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AddUser from './pages/admin/AddUser';
@@ -44,7 +43,6 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/setup-admin" element={<FirstTimeSetup />} />
 
           <Route
             path="/update-password"

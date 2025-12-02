@@ -12,6 +12,7 @@ const UserStores = () => {
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     fetchStores();
@@ -50,6 +51,9 @@ const UserStores = () => {
   };
 
   const handleRatingSubmit = async () => {
+    if (rating === 0) return;
+    
+    setSubmitting(true);
     try {
       await api.post('/user/ratings', { storeId: selectedStore.id, rating });
       setRatingDialog(false);
@@ -57,6 +61,8 @@ const UserStores = () => {
     } catch (error) {
       console.error('Error submitting rating:', error);
       alert(error.response?.data?.error || 'Error submitting rating');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -160,11 +166,22 @@ const UserStores = () => {
               )}
 
               <div className="flex gap-4">
-                <button onClick={() => setRatingDialog(false)} className="flex-1 bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300 transition">
+                <button 
+                  onClick={() => setRatingDialog(false)} 
+                  disabled={submitting}
+                  className="flex-1 bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   Cancel
                 </button>
-                <button onClick={handleRatingSubmit} disabled={rating === 0} className="flex-1 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
-                  Submit
+                <button 
+                  onClick={handleRatingSubmit} 
+                  disabled={rating === 0 || submitting} 
+                  className="flex-1 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {submitting && (
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  )}
+                  {submitting ? 'Submitting...' : 'Submit'}
                 </button>
               </div>
             </div>

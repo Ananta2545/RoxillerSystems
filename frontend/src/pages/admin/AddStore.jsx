@@ -61,6 +61,17 @@ const AddStore = () => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
+        <div className="max-w-2xl mx-auto mb-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition shadow-sm font-medium"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
+          </button>
+        </div>
         <div className="max-w-2xl mx-auto bg-white rounded-lg shadow p-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Add New Store</h2>
           {serverError && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{serverError}</div>}
@@ -90,7 +101,10 @@ const AddStore = () => {
               {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
             </div>
             <div className="flex gap-4 mt-6">
-              <button type="submit" disabled={loading} className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition">
+              <button type="submit" disabled={loading} className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center gap-2">
+                {loading && (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                )}
                 {loading ? 'Creating...' : 'Create Store'}
               </button>
               <button type="button" onClick={() => navigate('/admin/stores')} className="flex-1 bg-white text-gray-700 py-2 px-4 rounded-md border border-gray-300 hover:bg-gray-50 transition">

@@ -60,6 +60,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setServerError('');
+    setErrors({});
     
     if (!validateForm()) {
       return;
@@ -164,9 +165,12 @@ const Signup = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition"
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center gap-2"
             >
-              {loading ? 'Loading...' : 'Sign Up'}
+              {loading && (
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              )}
+              {loading ? 'Signing up...' : 'Sign Up'}
             </button>
             
             <p className="text-center text-sm text-gray-600">
