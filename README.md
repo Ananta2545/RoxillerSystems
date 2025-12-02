@@ -358,10 +358,4 @@ After seeding the database, use these credentials to test different roles:
 
 ---
 
-## 🤝 Contributing
-
-This project was built as part of a FullStack Intern Coding Challenge.
-
----
-
 *Developed as part of the FullStack Intern Coding Challenge*
