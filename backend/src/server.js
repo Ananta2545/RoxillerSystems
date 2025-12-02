@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import prisma from './config/db.js';
 
 import authRoutes from './routes/authRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
@@ -13,31 +12,24 @@ dotenv.config();
 const app = express();
 
 // CORS configuration - must be before routes
-app.use(cors({
+const corsOptions = {
   origin: ['https://roxiller-systems-xe4x.vercel.app', 'http://localhost:5173'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
-}));
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
-// Handle preflight OPTIONS requests
-app.options('*', cors());
-
-// Health check endpoints
+// Health check endpoints (no DB call to avoid cold start issues)
 app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Store Rating API is running' });
 });
 
-app.get('/api/health', async (req, res) => {
-  try {
-    await prisma.$queryRaw`SELECT 1`;
-    res.json({ status: 'ok', database: 'connected' });
-  } catch (error) {
-    console.error('Health check error:', error);
-    res.status(500).json({ status: 'error', database: 'disconnected' });
-  }
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', message: 'API is healthy' });
 });
 
 app.use('/api/auth', authRoutes);
@@ -45,7 +37,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/store', storeRoutes);
 
-// I am handling middle ware errors here
+// Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Error:', err);
   res.status(500).json({ error: 'Internal server error' });
